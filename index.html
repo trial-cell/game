@@ -75,6 +75,7 @@
   </div>
 
   <div class="emoji" id="emoji">🥰😍😘</div>
+  <div class="love-paragraph" id="loveParagraph" style="display: none; font-size: 24px; margin-top: 40px; color: #1e293b; text-align: center; max-width: 600px; line-height: 1.8; direction: rtl;"></div>
 
   <audio id="romantic-audio" src="https://cdn.pixabay.com/audio/2023/03/06/audio_24bb7cb0e6.mp3"></audio>
 
@@ -120,7 +121,40 @@
           onComplete: () => heart.remove()
         });
       }, 300);
+
+
+      love()
     }
+
+    function love(){
+       // فقرة الحب
+       const paragraph = "وجودك جنبي هو أجمل حاجة حصلت في حياتي، وكل لحظة معاك بتخليني أحبك أكتر.";
+      const loveDiv = document.getElementById("loveParagraph");
+      loveDiv.innerHTML = "";
+
+      // تجزئة الفقرة إلى كلمات
+      const words = paragraph.split(" ");
+      words.forEach((word, i) => {
+        const span = document.createElement("span");
+        span.textContent = word + "  ";
+        span.style.opacity = 0;
+        span.style.display = "inline-block";
+        loveDiv.appendChild(span);
+
+        gsap.to(span, {
+          opacity: 1,
+          y: -10,
+          delay: 2 + i * 0.15,
+          duration: 0.6,
+          ease: "power2.out"
+        });
+      });
+
+      loveDiv.style.display = "block";
+    }
+
+   
+
   </script>
 
 </body>
