@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <title>بحبك</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <style>
+    body {
+      background-color: #f0fdf4;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      flex-direction: column;
+      font-family: 'Cairo', sans-serif;
+      overflow: hidden;
+      position: relative;
+    }
+
+    button {
+      background-color: #22c55e;
+      color: white;
+      border: none;
+      padding: 15px 30px;
+      font-size: 20px;
+      border-radius: 12px;
+      cursor: pointer;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+      transition: transform 0.2s ease;
+    }
+
+    button:hover {
+      transform: scale(1.05);
+    }
+
+    .message {
+      font-size: 70px;
+      color: #e11d48;
+      display: none;
+      font-weight: bold;
+      margin-top: 30px;
+      position: relative;
+      display: none;
+      align-items: center;
+      flex-direction: row-reverse;
+      gap: 15px;
+    }
+
+    .heart {
+      position: absolute;
+      color: #e11d48;
+      font-size: 24px;
+      pointer-events: none;
+    }
+
+    .fixed-heart {
+      font-size: 50px;
+      margin-left: 10px;
+    }
+
+    .emoji {
+      font-size: 40px;
+      margin-top: 15px;
+      opacity: 0;
+    }
+  </style>
+</head>
+<body>
+
+  <button onclick="showLove()">ابدأ الان    </button>
+
+  <div class="message" id="message">
+    <span> بحبك اوى يا حبيبة</span>
+    <span class="fixed-heart">❤️</span>
+  </div>
+
+  <div class="emoji" id="emoji">🥰😍😘</div>
+
+  <audio id="romantic-audio" src="https://cdn.pixabay.com/audio/2023/03/06/audio_24bb7cb0e6.mp3"></audio>
+
+  <script>
+    const audio = document.getElementById("romantic-audio");
+
+    function showLove() {
+      const message = document.getElementById('message');
+      const emoji = document.getElementById('emoji');
+      message.style.display = 'flex';
+
+      // تشغيل الصوت
+      audio.play();
+
+      // عرض كلمة "بحبك"
+      gsap.fromTo(message, 
+        { scale: 0, opacity: 0 }, 
+        { scale: 1, opacity: 1, duration: 1.2, ease: "back.out(1.7)" }
+      );
+
+      // إظهار الإيموجي
+      gsap.to(emoji, { opacity: 1, y: -20, duration: 1, delay: 1 });
+
+      // قلوب متكررة تطير
+      setInterval(() => {
+        const heart = document.createElement('div');
+        heart.classList.add('heart');
+        heart.innerText = '❤️';
+        document.body.appendChild(heart);
+
+        gsap.set(heart, {
+          x: Math.random() * window.innerWidth,
+          y: window.innerHeight,
+          scale: Math.random() * 0.6 + 0.4,
+          opacity: 1
+        });
+
+        gsap.to(heart, {
+          y: -100,
+          opacity: 0,
+          duration: 4 + Math.random() * 2,
+          ease: "sine.out",
+          onComplete: () => heart.remove()
+        });
+      }, 300);
+    }
+  </script>
+
+</body>
+</html>
